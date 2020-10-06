@@ -1,0 +1,6 @@
+__pycache__
+mxm_dataset_train.txt
+utils.py
+test/
+count_matrix.txt
+test_words.txt
