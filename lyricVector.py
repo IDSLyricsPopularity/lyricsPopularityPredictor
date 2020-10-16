@@ -2,9 +2,11 @@
 import nltk
 import re
 import pandas as pd
-
+from nltk.stem import PorterStemmer
+porter = PorterStemmer()
+unstemmer = pd.read_csv('Datasets/mxm_reverse_mapping.txt', sep='<SEP>', engine='python', names=['stemmed', 'original'])
 #nltk.download('punkt')
-lyrics = "I love, LOVE, coding very much, you know. That is why I study it in college!"
+lyrics = "I loved, he loves, before we loved college! Colleges rule!"
 
 def makeVector(lyrics):
     words = createBagOfWords(lyrics)
@@ -27,6 +29,8 @@ def createBagOfWords(lyrics):
     for sentence in corpus:
         tokens = nltk.word_tokenize(sentence)
         for token in tokens:
+            token = porter.stem(token)
+            token = unstemmer.loc[unstemmer['stemmed'] == token, 'original'].values[0]
             if token not in bagOfWords.keys():
                 bagOfWords[token] = 1
             else:
