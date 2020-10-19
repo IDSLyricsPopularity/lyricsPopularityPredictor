@@ -13,33 +13,4 @@ D. In order to understand words used in successful songs we might perform some s
 
 E. EDA performed via some interactive tool (HTML...), results of the analysis might for example show similarities with other songs interactively
 
-F. For a songwriter it might be useful to know the current trends in music in order to tune his own lyrics. We are hoping for some user-friendly way how the results can be presented. 
-
-Static or dynamic
-
-clustering types of words in successful lyrics against unsuccessful lyrics?
-
-- are they about love, friends, war, violence, family...?
-
-https://michaeljohns.github.io/lyrics-lab/
-
-### Data
-
-- Spotify data
-  - https://developer.spotify.com/documentation/web-api/
-- lyrics data
-  - https://developer.musixmatch.com/documentation/api-reference/track
-  - http://millionsongdataset.com/musixmatch/
-
-### Data analysis
-
-- clustering, regression? (taken from the lecture slides example of mini project about social media popularity)
-
-### Presentation
-
-- visualization via some interactive tool on the given lyrics
-- similarity with other popular songs
-
-### Operationalization
-
-- easy to use, gives relevant suggestions
+F. For a songwriter it might be useful to know the current trends in music in order to tune his own lyrics. We are hoping for some user-friendly way how the results can be presented.
