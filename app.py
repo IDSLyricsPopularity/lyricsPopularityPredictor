@@ -110,7 +110,7 @@ if st.button('Analyze it'):
     prediction = int(prediction)
     
     # show corresponding heart picture
-    filename = f"hearts{prediction}.png"
+    filename = f"Images/hearts{prediction}.png"
     heart_img = plt.imread(filename)
     st.image(heart_img, width = 300)
     if prediction == 0:
