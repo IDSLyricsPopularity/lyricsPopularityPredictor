@@ -2,10 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import csv
 import matplotlib.pyplot as plt
-import nltk
 import re
+import nltk
 from nltk.stem import PorterStemmer
 
 DATASET_PATH = 'Datasets/final_songs.csv'
@@ -24,17 +23,17 @@ def makeVector(lyrics):
     for index, row in df.iterrows():
         df.loc[index, 'track'] = words.get(row['words'], 0)
 
-    #print(list(df['track']))
+    f"{np.array(df['track']).shape}"
     return np.array(df['track'])
 
 def createBagOfWords(lyrics):
     corpus = nltk.sent_tokenize(lyrics)
     porter = PorterStemmer()
     unstemmer = pd.read_csv(UNSTEMMER_PATH, sep='<SEP>', engine='python', names=['stemmed', 'original'])
-    for i in range(len(corpus )):
-        corpus [i] = corpus [i].lower()
-        corpus [i] = re.sub(r'\W',' ',corpus [i])
-        corpus [i] = re.sub(r'\s+',' ',corpus [i])
+    for i in range(len(corpus)):
+        corpus [i] = corpus[i].lower()
+        corpus [i] = re.sub(r'\W',' ',corpus[i])
+        corpus [i] = re.sub(r'\s+',' ',corpus[i])
 
     bagOfWords = {}
     for sentence in corpus:
@@ -50,11 +49,6 @@ def createBagOfWords(lyrics):
 
 def transform_genrename(genre):
     return genre.replace('/', '-')
-
-def transform_song(song_text):
-    ### TODO - transform song lyrics to vector of word counts - Minka's code
-    ### return np.load('test_song_for_pred.npy')
-    return makeVector(song_text)
 
 def predict(model, word_freq):
     return model.predict(word_freq.reshape(1, -1))
@@ -105,7 +99,7 @@ song_text = st.text_area(
 # popularity predictions
 model = load_model(selected_genre)
 if st.button('Analyze it'):
-    word_freq = transform_song(song_text)
+    word_freq = makeVector(song_text)
     prediction = predict(model, word_freq)
     prediction = int(prediction)
     
