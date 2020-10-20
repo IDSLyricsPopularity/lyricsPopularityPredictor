@@ -8,16 +8,21 @@ import nltk
 from nltk.stem import PorterStemmer
 
 DATASET_PATH = 'Datasets/final_songs.csv'
-WORDS_PATH = 'Datasets/words.csv'
+VOCAB_PATH = 'Datasets/vocabulary.csv'
+# WORDS_PATH = 'Datasets/words.csv'
 UNSTEMMER_PATH = 'Datasets/mxm_reverse_mapping.txt'
 
 @st.cache
 def download_punkt():
     nltk.download('punkt')
 
+@st.cache
+def load_vocabulary():
+    return pd.read_csv(VOCAB_PATH, names=['words'])
+
 def makeVector(lyrics):
     words = createBagOfWords(lyrics)
-    df = pd.read_csv(WORDS_PATH, names=['words'])
+    df = load_vocabulary()
     df
     df['track']=0
 
@@ -68,9 +73,6 @@ def load_model(genre):
     filename = f"Models/logReg/{genre}.sav"
     model = pickle.load(open(filename, 'rb'))
     return model
-
-    # data = pd.read_csv(DATASET_PATH)
-    # return data
 
 @st.cache
 def load_wordcloud(genre):
