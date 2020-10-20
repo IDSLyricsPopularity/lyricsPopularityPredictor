@@ -11,18 +11,10 @@ DATASET_PATH = 'Datasets/final_songs.csv'
 VOCAB_PATH = 'Datasets/vocabulary.csv'
 UNSTEMMER_PATH = 'Datasets/mxm_reverse_mapping.txt'
 
-@st.cache
-def download_punkt():
-    nltk.download('punkt')
-
-@st.cache
-def load_vocabulary():
-    return pd.read_csv(VOCAB_PATH, names=['words'])
-
 def makeVector(lyrics):
     words = createBagOfWords(lyrics)
-    df = load_vocabulary()
-    df['track']=0
+    df = pd.read_csv(VOCAB_PATH, names=['words'])
+    df['track'] = 0
 
     for index, row in df.iterrows():
         df.loc[index, 'track'] = words.get(row['words'], 0)
@@ -43,6 +35,11 @@ def createBagOfWords(lyrics):
         tokens = nltk.word_tokenize(sentence)
         for token in tokens:
             token = porter.stem(token)
+
+            # if word is not in our vocabulary -> don't process it
+            if token not in unstemmer['stemmed'].values:
+                continue
+
             token = unstemmer.loc[unstemmer['stemmed'] == token, 'original'].values[0]
             if token not in bagOfWords.keys():
                 bagOfWords[token] = 1
@@ -56,6 +53,10 @@ def transform_genrename(genre):
 
 def predict(model, word_freq):
     return model.predict(word_freq.reshape(1, -1))
+
+@st.cache
+def download_punkt():
+    nltk.download('punkt')
 
 @st.cache
 def load_dataset():
@@ -82,7 +83,7 @@ def load_wordcloud(genre):
 download_punkt()
 df, genres = load_dataset()
 selected_genre = st.selectbox(
-    'Pick a genre of you song:',
+    'Pick a genre of your song:',
     genres
 )
 
