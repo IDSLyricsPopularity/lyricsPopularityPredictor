@@ -9,7 +9,6 @@ from nltk.stem import PorterStemmer
 
 DATASET_PATH = 'Datasets/final_songs.csv'
 VOCAB_PATH = 'Datasets/vocabulary.csv'
-# WORDS_PATH = 'Datasets/words.csv'
 UNSTEMMER_PATH = 'Datasets/mxm_reverse_mapping.txt'
 
 @st.cache
@@ -23,13 +22,11 @@ def load_vocabulary():
 def makeVector(lyrics):
     words = createBagOfWords(lyrics)
     df = load_vocabulary()
-    df
     df['track']=0
 
     for index, row in df.iterrows():
         df.loc[index, 'track'] = words.get(row['words'], 0)
 
-    f"{np.array(df['track']).shape}"
     return np.array(df['track'])
 
 def createBagOfWords(lyrics):
@@ -52,7 +49,6 @@ def createBagOfWords(lyrics):
             else:
                 bagOfWords[token] += 1
 
-    f'{bagOfWords}'
     return bagOfWords
 
 def transform_genrename(genre):
