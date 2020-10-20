@@ -18,6 +18,7 @@ def download_punkt():
 def makeVector(lyrics):
     words = createBagOfWords(lyrics)
     df = pd.read_csv(WORDS_PATH, names=['words'])
+    df
     df['track']=0
 
     for index, row in df.iterrows():
@@ -45,6 +46,8 @@ def createBagOfWords(lyrics):
                 bagOfWords[token] = 1
             else:
                 bagOfWords[token] += 1
+
+    f'{bagOfWords}'
     return bagOfWords
 
 def transform_genrename(genre):
